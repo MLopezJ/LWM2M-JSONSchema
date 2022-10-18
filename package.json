@@ -1,5 +1,6 @@
 {
-  "name": "@nordicsemiconductor/lwm2m-types",
+  "name": "@nordicsemiconductor/lwm2m-typebox-types",
+  "description": "TypeBox definitions for the objects defined in the LwM2M Object Registry.",
   "scripts": {
     "test": "jest "
   },
