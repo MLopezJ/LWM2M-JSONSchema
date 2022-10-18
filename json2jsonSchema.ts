@@ -1,6 +1,4 @@
-import * as json from "./1.json";
 import fs from "fs";
-import config from "./config/config";
 
 /**
  * Get the equivalent data type
@@ -65,47 +63,63 @@ export const getTypebox = (
     : `${key}: ${definition}`;
 };
 
+export const parseItem = (element: any) => {
+  // pick properties from the current element to generate the typebox definition
+  const key = element.Name[0].replaceAll(" ", "_").replaceAll("-", "_");
+  const type = element.Type[0];
+  const description = element.Description[0]
+    .replaceAll(`"`, "'")
+    .replaceAll("’", "'")
+    .replaceAll("\n", " ");
+  const isOptional = element.Mandatory[0] === "Optional";
+  const rangeEnumeration = element.RangeEnumeration[0].split("..");
+  const id = element.ATTR.ID;
+  const units = element.Units[0];
+
+  return [key, type, description, isOptional, rangeEnumeration, id, units];
+};
+
+export const parsedItemToTypeBox = (
+  key: string,
+  type: string,
+  description: string,
+  isOptional: boolean,
+  rangeEnumeration: string[],
+  id: string,
+  units: string
+): string =>
+  getTypebox(key, type, description, isOptional, rangeEnumeration, id, units);
+
 /**
  * Iterates over the items and construct the definition of the object
  */
 export const defineProperties = (
   items: any[],
-  typeboxDefinition = (
-    key: string,
-    type: string,
-    description: string,
-    isOptional: boolean,
-    rangeEnumeration: any[],
-    id: string,
-    units: string
-  ) =>
-    getTypebox(key, type, description, isOptional, rangeEnumeration, id, units)
-): string =>
-  items.reduce((object: string | any[], element: any) => {
-    // pick properties from the current element to generate the typebox definition
-    const key = element.Name[0].replaceAll(" ", "_").replaceAll("-", "_");
-    const type = element.Type[0];
-    const description = element.Description[0]
-      .replaceAll(`"`, "'")
-      .replaceAll("’", "'")
-      .replaceAll("\n", " ");
-    const isOptional = element.Mandatory[0] === "Optional";
-    const rangeEnumeration = element.RangeEnumeration[0].split("..");
-    const id = element.ATTR.ID;
-    const units = element.Units[0];
+  toTypeBox?: typeof parsedItemToTypeBox
+): string => {
+  const converted = items.map(parseItem);
 
-    const typebox = typeboxDefinition(
-      key,
-      type,
-      description,
-      isOptional,
-      rangeEnumeration,
-      id,
-      units
-    );
+  const result = converted.reduce(
+    (
+      object,
+      [key, type, description, isOptional, rangeEnumeration, id, units]
+    ) => {
+      const typebox = (toTypeBox ?? parsedItemToTypeBox)(
+        key,
+        type,
+        description,
+        isOptional,
+        rangeEnumeration,
+        id,
+        units
+      );
+      return object.length === 0 ? typebox : `${object}, ${typebox}`;
+    },
+    ""
+  );
 
-    return object.length === 0 ? typebox : `${object}, ${typebox}`;
-  }, "");
+  return result;
+};
 
 /**
  * Typebox import statement in string
@@ -147,10 +161,3 @@ export const main =
     const jsonSchema = `${importStatement}\n ${object}`;
     write(dir, jsonSchema);
   };
-
-main(
-  `${config.PASTE_DIR}/1.ts`,
-  json.LWM2M.Object[0].Description1[0],
-  json.LWM2M.Object[0].Resources[0].Item,
-  json.LWM2M.Object[0].Name[0]
-)();
