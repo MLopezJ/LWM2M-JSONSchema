@@ -1,5 +1,5 @@
 describe('xmlschem2typebox()', () => {
-    it('should convert the JSON, that has been created from the XMLSchema into a TypeBox type', () => {
+    it('should convert the JSON, that has been created from the XMLSchema into a TypeBox type', async () => {
         // 1. run the conversion
         const source= './1.xml'
         const typedefTS = './lwm2m-objects.ts'
