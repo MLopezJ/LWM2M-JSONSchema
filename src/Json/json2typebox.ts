@@ -82,7 +82,6 @@ export const getTypebox = (
   const maximum = rangeEnumeration[1] ? Number(rangeEnumeration[1]) : null;
 
   const props = [
-    `$id: '${id}'`,
     `title: '${name}'`,
     `description: "${dataCleaning(description)}"`,
     minimum !== null ? `minimum: ${minimum}` : undefined,
@@ -98,8 +97,8 @@ export const getTypebox = (
 
   const definition = `Type.${getType(type)}({${props}})`;
   return isOptional
-    ? `${keyCleaning(name)}: Type.Optional(${definition})`
-    : `${keyCleaning(name)}: ${definition}`;
+    ? `_${id}: Type.Optional(${definition})`
+    : `_${id}: ${definition}`;
 };
 
 /**

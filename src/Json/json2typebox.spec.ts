@@ -26,7 +26,7 @@ describe("json2jsonSchema", () => {
         id,
         units
       );
-      const result = `Communication_Retry_Count: Type.Number({$id: '16', title: 'Communication Retry Count', description: \"The number of successive communication attempts before which a communication sequence is considered as failed.\"})`;
+      const result = `_16: Type.Number({title: 'Communication Retry Count', description: \"The number of successive communication attempts before which a communication sequence is considered as failed.\"})`;
 
       expect(typeboxDefinition).toContain(`title: '${name}'`);
       expect(typeboxDefinition).toContain(`description: "${description}"`);
@@ -54,7 +54,7 @@ describe("json2jsonSchema", () => {
         units
       );
 
-      const result = `Communication_Retry_Count: Type.Number({$id: '16', title: 'Communication Retry Count', description: "The number of successive communication attempts before which a communication sequence is considered as failed.", minimum: 1, maximum: 65534})`;
+      const result = `_16: Type.Number({title: 'Communication Retry Count', description: "The number of successive communication attempts before which a communication sequence is considered as failed.", minimum: 1, maximum: 65534})`;
 
       expect(typeboxDefinition).toContain(`minimum: ${minimum}`);
       expect(typeboxDefinition).toContain(`maximum: ${maximum}`);
@@ -79,7 +79,7 @@ describe("json2jsonSchema", () => {
         id,
         units
       );
-      const result = `Communication_Retry_Count: Type.Number({$id: '16', title: 'Communication Retry Count', description: "The number of successive communication attempts before which a communication sequence is considered as failed.", units: 's'})`;
+      const result = `_16: Type.Number({title: 'Communication Retry Count', description: "The number of successive communication attempts before which a communication sequence is considered as failed.", units: 's'})`;
 
       expect(typeboxDefinition).toContain(`units: '${units}'`);
       expect(typeboxDefinition).toBe(result);
@@ -103,7 +103,7 @@ describe("json2jsonSchema", () => {
         id,
         units
       );
-      const result = `Communication_Retry_Count: Type.Optional(Type.Number({$id: '16', title: 'Communication Retry Count', description: "The number of successive communication attempts before which a communication sequence is considered as failed."}))`;
+      const result = `_16: Type.Optional(Type.Number({title: 'Communication Retry Count', description: "The number of successive communication attempts before which a communication sequence is considered as failed."}))`;
 
       expect(typeboxDefinition).toBe(result);
     });
@@ -152,7 +152,7 @@ describe("json2jsonSchema", () => {
           Description: ["Used as link to associate server Object Instance."],
         },
       ];
-      const result = `Short_Server_ID: Type.Number({$id: '0', title: 'Short Server ID', description: \"Used as link to associate server Object Instance.\", minimum: 1, maximum: 65534})`;
+      const result = `_0: Type.Number({title: 'Short Server ID', description: \"Used as link to associate server Object Instance.\", minimum: 1, maximum: 65534})`;
       expect(getObjectProps(items)).toBe(result);
     });
   });
