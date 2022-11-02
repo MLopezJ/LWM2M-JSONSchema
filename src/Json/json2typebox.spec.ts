@@ -4,6 +4,7 @@ import {
   parseData,
   dataCleaning,
   cleanUnits,
+  getRangeEnumeration,
 } from "./json2typebox";
 
 describe("json2jsonSchema", () => {
@@ -22,7 +23,7 @@ describe("json2jsonSchema", () => {
         type,
         description,
         isOptional,
-        rangeEnumeration,
+        rangeEnumeration, // FIXME
         id,
         units
       );
@@ -49,7 +50,7 @@ describe("json2jsonSchema", () => {
         type,
         description,
         isOptional,
-        rangeEnumeration,
+        rangeEnumeration, // FIXME
         id,
         units
       );
@@ -75,7 +76,7 @@ describe("json2jsonSchema", () => {
         type,
         description,
         isOptional,
-        rangeEnumeration,
+        rangeEnumeration, // FIXME
         id,
         units
       );
@@ -99,7 +100,7 @@ describe("json2jsonSchema", () => {
         type,
         description,
         isOptional,
-        rangeEnumeration,
+        rangeEnumeration, // FIXME
         id,
         units
       );
@@ -200,6 +201,21 @@ describe("json2jsonSchema", () => {
       ["meters", "meters"],
     ])("Should remove line breakers from value", (units, expected) =>
       expect(cleanUnits(units)).toBe(expected)
+    );
+  });
+
+  describe("getRangeEnumeration", () => {
+    it.only.each([
+      ["", null],
+      ["0..125", [0, 125]],
+      ["1..256", [1, 256]],
+      ["16,32,48", [16, 32, 48]],
+      ["0..255 bytes", [0, 255]],
+      //["0..255 gigas", [0, 255]],
+      ["no valid case", null],
+      ["noValidCase", null],
+    ])("Should return range enumeration: %s -> %p", (value, expected) =>
+      expect(getRangeEnumeration(value)).toStrictEqual(expected)
     );
   });
 });

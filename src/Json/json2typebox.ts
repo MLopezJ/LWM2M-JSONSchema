@@ -58,6 +58,26 @@ export const keyCleaning = (key: string) =>
 export const cleanUnits = (value: string) =>
   value.split(/\s/).filter((x) => x !== "").length === 0 ? "" : value;
 
+// TODO: add description and test case
+const getMax = (list: (number | null)[]) =>
+  list.reduce((prev, current) => {
+    if (prev === null) return current;
+
+    if (current === null) return prev;
+
+    return prev > current ? prev : current;
+  }, null);
+
+// TODO: add description and test case
+const getMin = (list: (number | null)[]) =>
+  list.reduce((prev, current) => {
+    if (prev === null) return current;
+
+    if (current === null) return prev;
+
+    return prev < current ? prev : current;
+  }, null);
+
 /**
  * Generate typebox definition with received params
  * @param name
@@ -74,18 +94,30 @@ export const getTypebox = (
   type: string,
   description: string,
   isOptional: boolean,
-  rangeEnumeration: string[],
+  rangeEnumeration: [...(number | null)[]] | null,
   id: string,
   units: string
 ): string => {
-  const minimum = rangeEnumeration[0] ? Number(rangeEnumeration[0]) : null;
-  const maximum = rangeEnumeration[1] ? Number(rangeEnumeration[1]) : null;
+  let minimum = undefined;
+  let maximum = undefined;
+  let enumeration = undefined;
+
+  if (rangeEnumeration !== null) {
+    minimum = rangeEnumeration[0];
+    maximum = rangeEnumeration[1];
+    if (rangeEnumeration.length > 2) {
+      minimum = getMin(rangeEnumeration);
+      maximum = getMax(rangeEnumeration);
+      enumeration = rangeEnumeration;
+    }
+  }
 
   const props = [
     `title: '${name}'`,
     `description: "${dataCleaning(description)}"`,
-    minimum !== null ? `minimum: ${minimum}` : undefined,
-    maximum !== null ? `maximum: ${maximum}` : undefined,
+    minimum !== undefined ? `minimum: ${minimum}` : undefined,
+    maximum !== undefined ? `maximum: ${maximum}` : undefined,
+    enumeration !== undefined ? `enumeration: [${enumeration}]` : undefined,
     units ? `units: '${cleanUnits(units)}'` : undefined,
   ].reduce((previous, current, index) => {
     if (current) {
@@ -102,6 +134,35 @@ export const getTypebox = (
 };
 
 /**
+ *
+ * @param rangeEnumeration
+ * @returns
+ */
+export const getRangeEnumeration = (
+  rangeEnumeration: string
+): [...(number | null)[]] | null => {
+  if (rangeEnumeration.length === 0) return null; // empty string case
+
+  if (rangeEnumeration.includes("..")) {
+    const minAndMax = rangeEnumeration.split("..");
+    const minimum = minAndMax[0]
+      ? Number(minAndMax[0].replace("bytes", "")) // TODO: remove any string
+      : null;
+    const maximum = minAndMax[1]
+      ? Number(minAndMax[1].replace("bytes", "")) // TODO: remove any string
+      : null;
+    return [minimum, maximum];
+  }
+
+  if (rangeEnumeration.split(",").length > 1)
+    return rangeEnumeration
+      .split(",")
+      .map((element: string) => Number(element));
+
+  return null; // no valid case
+};
+
+/**
  * Pick properties from element to generate the typebox definition
  */
 export const parseData = (
@@ -111,7 +172,7 @@ export const parseData = (
   type: string;
   description: string;
   isOptional: boolean;
-  rangeEnumeration: string[];
+  rangeEnumeration: [...(number | null)[]] | null;
   id: string;
   units: string;
 } => {
@@ -119,7 +180,7 @@ export const parseData = (
   const type = element.Type[0];
   const description = dataCleaning(element.Description[0]);
   const isOptional = element.Mandatory[0] === "Optional";
-  const rangeEnumeration = element.RangeEnumeration[0].split("..");
+  const rangeEnumeration = getRangeEnumeration(element.RangeEnumeration[0]);
   const id = element.ATTR.ID;
   const units = element.Units[0];
   return { name, type, description, isOptional, rangeEnumeration, id, units };
