@@ -5,7 +5,6 @@ import { _6 } from "./types/6";
 import { LwM2M } from "./LWM2M";
 import { LwM2MType } from "./LWM2MType";
 import { validateWithJSONSchema } from "./src/utils/validateWithJsonSchema";
-import { Type } from "@sinclair/typebox";
 
 // This is a JSON representation of LwM2M, for example stored in AWS IoT Shadow
 // The JSON notation for LwM2M follows previous work by AVSystem as used in Coiote, but with values follow the LwM2M standard (e.g. numbers are expressed as strings in Coiote, but are Integers in LwM2M standard)
