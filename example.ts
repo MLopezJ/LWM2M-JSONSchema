@@ -3,6 +3,7 @@ import * as assert from "node:assert/strict";
 import { _5 } from "./types/5";
 import { _6 } from "./types/6";
 import { LwM2M } from "./LWM2M";
+import { LwM2MType } from "./LWM2MType";
 import { validateWithJSONSchema } from "./src/utils/validateWithJsonSchema";
 import { Type } from "@sinclair/typebox";
 
@@ -37,12 +38,6 @@ const _6Value: LwM2M.Object_6.Location = {
     _5: "10:25:54",
   },
 };
-
-// TODO: create LwM2M full object typebox definition
-const LwM2MType = Type.Object({
-  _5, //Firmware_Update: Type.Object({ _5schema }),
-  _6, //Location: Type.Object({ _6schema }),
-});
 
 const shadow = {
   _5: _5Value, // Firmware_Update
