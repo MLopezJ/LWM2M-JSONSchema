@@ -58,8 +58,12 @@ export const keyCleaning = (key: string) =>
 export const cleanUnits = (value: string) =>
   value.split(/\s/).filter((x) => x !== "").length === 0 ? "" : value;
 
-// TODO: add description and test case
-const getMax = (list: (number | null)[]) =>
+/**
+ * Find and return the maximum value in list
+ * @param list
+ * @returns number | null
+ */
+export const getMax = (list: (number | null)[]) =>
   list.reduce((prev, current) => {
     if (prev === null) return current;
 
@@ -68,8 +72,12 @@ const getMax = (list: (number | null)[]) =>
     return prev > current ? prev : current;
   }, null);
 
-// TODO: add description and test case
-const getMin = (list: (number | null)[]) =>
+/**
+ * Find and return the minimum value in list
+ * @param list
+ * @returns number | null
+ */
+export const getMin = (list: (number | null)[]) =>
   list.reduce((prev, current) => {
     if (prev === null) return current;
 

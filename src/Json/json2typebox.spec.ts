@@ -5,6 +5,8 @@ import {
   dataCleaning,
   cleanUnits,
   getRangeEnumeration,
+  getMax,
+  getMin,
 } from "./json2typebox";
 
 describe("json2jsonSchema", () => {
@@ -205,7 +207,7 @@ describe("json2jsonSchema", () => {
   });
 
   describe("getRangeEnumeration", () => {
-    it.only.each([
+    it.each([
       ["", null],
       ["0..125", [0, 125]],
       ["1..256", [1, 256]],
@@ -219,4 +221,38 @@ describe("json2jsonSchema", () => {
       expect(getRangeEnumeration(value)).toStrictEqual(expected)
     );
   });
+
+  describe("getMax", () => {
+    it.only.each([
+      [[1, 2, 3, 4, 5], 5],
+      [[5, 4, 3, 2, 1], 5],
+      [[1, 4, 5, 2, 3], 5],
+      [[4, 5, 1, 2, 3], 5],
+      [[4, 2, 1, 5, 3], 5],
+      [[], null],
+      [[null, null, null], null],
+      [[null, null, -1], -1],
+      [[-100, null, -1], -1],
+      [[3, 3, 3], 3],
+    ])("Should find maximum value in list : %p -> %p", (value, expected) =>
+      expect(getMax(value)).toStrictEqual(expected)
+    );
+  });
+});
+
+describe("getMin", () => {
+  it.only.each([
+    [[1, 2, 3, 4, 5], 1],
+    [[5, 4, 3, 2, 1], 1],
+    [[5, 4, 1, 2, 3], 1],
+    [[4, 1, 5, 2, 3], 1],
+    [[4, 2, 5, 1, 3], 1],
+    [[], null],
+    [[null, null, null], null],
+    [[null, null, -1], -1],
+    [[-100, null, -1], -100],
+    [[3, 3, 3], 3],
+  ])("Should find maximum value in list : %p -> %p", (value, expected) =>
+    expect(getMin(value)).toStrictEqual(expected)
+  );
 });
