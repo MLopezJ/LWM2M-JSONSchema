@@ -10,6 +10,33 @@ import {
 } from "./json2typebox";
 
 describe("json2jsonSchema", () => {
+  describe("parseData", () => {
+    it("Should pick properties from element and parse data", () => {
+      const items = [
+        {
+          ATTR: { ID: "0" },
+          Name: ["Short Server ID"],
+          Operations: ["R"],
+          MultipleInstances: ["Single"],
+          Mandatory: ["Mandatory"],
+          Type: ["Integer"],
+          RangeEnumeration: ["1..65534"],
+          Units: ["s"],
+          Description: ["Used as link to associate server Object Instance."],
+        },
+      ];
+      expect(parseData(items[0])).toStrictEqual({
+        name: "Short Server ID",
+        type: "Integer",
+        description: "Used as link to associate server Object Instance.",
+        isOptional: false,
+        rangeEnumeration: ["1", "65534"],
+        id: "0",
+        units: "s",
+      });
+    });
+  });
+
   describe("getTypebox", () => {
     it("Should return a typebox definition in string", () => {
       const name = "Communication Retry Count";
@@ -109,33 +136,6 @@ describe("json2jsonSchema", () => {
       const result = `_16: Type.Optional(Type.Number({title: 'Communication Retry Count', description: "The number of successive communication attempts before which a communication sequence is considered as failed."}))`;
 
       expect(typeboxDefinition).toBe(result);
-    });
-  });
-
-  describe("parseData", () => {
-    it("Should pick properties from element and parse data", () => {
-      const items = [
-        {
-          ATTR: { ID: "0" },
-          Name: ["Short Server ID"],
-          Operations: ["R"],
-          MultipleInstances: ["Single"],
-          Mandatory: ["Mandatory"],
-          Type: ["Integer"],
-          RangeEnumeration: ["1..65534"],
-          Units: ["s"],
-          Description: ["Used as link to associate server Object Instance."],
-        },
-      ];
-      expect(parseData(items[0])).toStrictEqual({
-        name: "Short Server ID",
-        type: "Integer",
-        description: "Used as link to associate server Object Instance.",
-        isOptional: false,
-        rangeEnumeration: ["1", "65534"],
-        id: "0",
-        units: "s",
-      });
     });
   });
 
