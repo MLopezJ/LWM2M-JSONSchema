@@ -149,6 +149,7 @@ export const getTypebox = (
 export const getRangeEnumeration = (
   rangeEnumeration: string
 ): [...(number | null)[]] | null => {
+  //TODO: define if null or undefine
   if (rangeEnumeration.length === 0) return null; // empty string case
 
   if (rangeEnumeration.includes("..")) {
