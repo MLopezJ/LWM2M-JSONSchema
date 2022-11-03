@@ -132,3 +132,18 @@ const _3347: LwM2M.Object_3347.Push_button = {
     _5750: "Push button 1",
   },
 };
+
+const _10256: LwM2M.Object_10256.ECID_Signal_Measurement_Information = {
+  Name: "Pressure",
+  ObjectURN: "urn:oma:lwm2m:ext:3323:1.1",
+  LWM2MVersion: 1.0,
+  ObjectVersion: 1.1,
+  Resources: {
+    _0: 247,
+    _1: 0,
+    _2: 6400,
+    _3: -96,
+    _4: -12,
+    _5: 0,
+  },
+};
