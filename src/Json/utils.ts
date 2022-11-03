@@ -7,16 +7,20 @@ export const getType = (type: string): string => {
   switch (type) {
     case "Integer":
       return "Number";
+    case "Float":
+      return "Number";
     case "Unsigned Integer":
       return "Number";
     case "Boolean":
       return "Boolean";
     case "String":
       return "String";
+    case "Time":
+      return "Date";
     default:
       return "Any";
   }
-};
+}; // TODO: add test case and show examples of use cases
 
 /**
  * Replace characters from element
