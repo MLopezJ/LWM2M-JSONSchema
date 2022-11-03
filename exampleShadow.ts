@@ -27,6 +27,7 @@ const _6: LwM2M.Object_6.Location = {
   },
 };
 
+// TODO: create shadow with real values
 export const shadow = {
   _5, // Firmware_Update
   _6, // Location
