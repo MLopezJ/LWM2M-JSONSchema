@@ -40,6 +40,20 @@ describe("json2jsonSchema", () => {
           units: "",
         },
       ],
+      [
+        {
+          rangeEnumeration: [""],
+          mandatory: ["Optional"],
+          type: ["String"],
+          units: [""],
+        },
+        {
+          rangeEnumeration: null,
+          isOptional: true,
+          type: "String",
+          units: "",
+        },
+      ],
     ])(
       "Should pick properties from element and parse data.",
       (value, expected) => {
