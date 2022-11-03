@@ -1,6 +1,6 @@
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
-import { keyCleaning } from "../Json/json2typebox";
+import { keyCleaning } from "../Json/utils";
 
 /**
  * The DDF object (https://github.com/OpenMobileAlliance/lwm2m-registry/blob/prod/DDF.xml)
