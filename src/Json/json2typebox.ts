@@ -145,11 +145,12 @@ export const getRangeEnumeration = (
 
   if (rangeEnumeration.includes("..")) {
     const minAndMax = rangeEnumeration.split("..");
+
     const minimum = minAndMax[0]
-      ? Number(minAndMax[0].replace("bytes", "")) // TODO: remove any string
+      ? Number(minAndMax[0].replace(/\D/g, ""))
       : null;
     const maximum = minAndMax[1]
-      ? Number(minAndMax[1].replace("bytes", "")) // TODO: remove any string
+      ? Number(minAndMax[1].replace(/\D/g, ""))
       : null;
     return [minimum, maximum];
   }
