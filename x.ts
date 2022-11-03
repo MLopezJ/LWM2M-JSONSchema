@@ -103,3 +103,19 @@ const _3303: LwM2M.Object_3303.Temperature = {
     _5701: "Celsius degrees",
   },
 };
+
+const _3304: LwM2M.Object_3304.Humidity = {
+  Name: "Humidity",
+  ObjectURN: "urn:oma:lwm2m:ext:3304:1.1",
+  LWM2MVersion: 1.0,
+  ObjectVersion: 1.1,
+  Resources: {
+    _5518: "2022/10/07, 13:33:22 UTC+0",
+    _5601: 31.06,
+    _5602: 31.06,
+    _5603: 0,
+    _5604: 100,
+    _5700: 28.93,
+    _5701: "%",
+  },
+};
