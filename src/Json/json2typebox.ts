@@ -62,6 +62,7 @@ export const getTypebox = (
     : `_${id}: ${definition}`;
 };
 
+// TODO: add description
 /**
  *
  * @param rangeEnumeration
