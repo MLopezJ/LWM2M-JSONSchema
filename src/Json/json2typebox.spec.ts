@@ -11,30 +11,62 @@ import {
 
 describe("json2jsonSchema", () => {
   describe("parseData", () => {
-    it("Should pick properties from element and parse data", () => {
-      const items = [
+    it.only.each([
+      [
         {
-          ATTR: { ID: "0" },
-          Name: ["Short Server ID"],
-          Operations: ["R"],
-          MultipleInstances: ["Single"],
-          Mandatory: ["Mandatory"],
-          Type: ["Integer"],
-          RangeEnumeration: ["1..65534"],
-          Units: ["s"],
-          Description: ["Used as link to associate server Object Instance."],
+          rangeEnumeration: ["1..65534"],
+          mandatory: ["Mandatory"],
+          type: ["Integer"],
+          units: ["s"],
         },
-      ];
-      expect(parseData(items[0])).toStrictEqual({
-        name: "Short Server ID",
-        type: "Integer",
-        description: "Used as link to associate server Object Instance.",
-        isOptional: false,
-        rangeEnumeration: ["1", "65534"],
-        id: "0",
-        units: "s",
-      });
-    });
+        {
+          rangeEnumeration: [1, 65534],
+          isOptional: false,
+          type: "Integer",
+          units: "s",
+        },
+      ],
+      [
+        {
+          rangeEnumeration: ["1,655,34"],
+          mandatory: ["Optional"],
+          type: ["String"],
+          units: [""],
+        },
+        {
+          rangeEnumeration: [1, 655, 34],
+          isOptional: true,
+          type: "String",
+          units: "",
+        },
+      ],
+    ])(
+      "Should pick properties from element and parse data.",
+      (value, expected) => {
+        const items = [
+          {
+            ATTR: { ID: "0" },
+            Name: ["Short Server ID"],
+            Operations: ["R"],
+            MultipleInstances: ["Single"],
+            Mandatory: value.mandatory,
+            Type: value.type,
+            RangeEnumeration: value.rangeEnumeration,
+            Units: value.units,
+            Description: ["Used as link to associate server Object Instance."],
+          },
+        ];
+        expect(parseData(items[0])).toStrictEqual({
+          name: "Short Server ID",
+          type: expected.type,
+          description: "Used as link to associate server Object Instance.",
+          isOptional: expected.isOptional,
+          rangeEnumeration: expected.rangeEnumeration,
+          id: "0",
+          units: expected.units,
+        });
+      }
+    );
   });
 
   describe("getTypebox", () => {
