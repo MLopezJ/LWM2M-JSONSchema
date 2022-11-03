@@ -119,3 +119,16 @@ const _3304: LwM2M.Object_3304.Humidity = {
     _5701: "%",
   },
 };
+
+const _3347: LwM2M.Object_3347.Push_button = {
+  Name: "Pressure",
+  ObjectURN: "urn:oma:lwm2m:ext:3323:1.1",
+  LWM2MVersion: 1.0,
+  ObjectVersion: 1.1,
+  Resources: {
+    _5500: false,
+    _5501: 0,
+    _5518: "1970/01/01, 0:00:00 UTC+0",
+    _5750: "Push button 1",
+  },
+};
