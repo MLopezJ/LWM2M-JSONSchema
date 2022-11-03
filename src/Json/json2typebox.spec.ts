@@ -11,7 +11,7 @@ import {
 
 describe("json2jsonSchema", () => {
   describe("parseData", () => {
-    it.only.each([
+    it.each([
       [
         {
           rangeEnumeration: ["1..65534"],
@@ -90,7 +90,7 @@ describe("json2jsonSchema", () => {
       const description =
         "The number of successive communication attempts before which a communication sequence is considered as failed.";
       const isOptional = false;
-      const rangeEnumeration = [""];
+      const rangeEnumeration = null;
       const id = "16";
       const units = "";
       const typeboxDefinition = getTypebox(
@@ -98,7 +98,7 @@ describe("json2jsonSchema", () => {
         type,
         description,
         isOptional,
-        rangeEnumeration, // FIXME
+        rangeEnumeration,
         id,
         units
       );
@@ -115,7 +115,7 @@ describe("json2jsonSchema", () => {
       const description =
         "The number of successive communication attempts before which a communication sequence is considered as failed.";
       const isOptional = false;
-      const rangeEnumeration = ["1", "65534"];
+      const rangeEnumeration = [1, 65534];
       const minimum = 1;
       const maximum = 65534;
       const id = "16";
@@ -125,7 +125,7 @@ describe("json2jsonSchema", () => {
         type,
         description,
         isOptional,
-        rangeEnumeration, // FIXME
+        rangeEnumeration,
         id,
         units
       );
@@ -143,7 +143,7 @@ describe("json2jsonSchema", () => {
       const description =
         "The number of successive communication attempts before which a communication sequence is considered as failed.";
       const isOptional = false;
-      const rangeEnumeration = [""];
+      const rangeEnumeration = null;
       const id = "16";
       const units = "s";
       const typeboxDefinition = getTypebox(
@@ -151,7 +151,7 @@ describe("json2jsonSchema", () => {
         type,
         description,
         isOptional,
-        rangeEnumeration, // FIXME
+        rangeEnumeration,
         id,
         units
       );
@@ -167,7 +167,7 @@ describe("json2jsonSchema", () => {
       const description =
         "The number of successive communication attempts before which a communication sequence is considered as failed.";
       const isOptional = true;
-      const rangeEnumeration = [""];
+      const rangeEnumeration = null;
       const id = "16";
       const units = "";
       const typeboxDefinition = getTypebox(
@@ -175,7 +175,7 @@ describe("json2jsonSchema", () => {
         type,
         description,
         isOptional,
-        rangeEnumeration, // FIXME
+        rangeEnumeration,
         id,
         units
       );
