@@ -15,7 +15,7 @@ if ("error" in maybeValidLwM2M) throw new Error(`Validation failed`);
 assert.deepStrictEqual("value" in maybeValidLwM2M, true);
 const shadow: typeof LwM2MType = (maybeValidLwM2M as any).value;
 
-// Ensuresure values are as expected
+// Ensure values are as expected
 assert.deepStrictEqual(shadow._1.Resources._1, 43200);
 assert.deepStrictEqual(shadow._3.Resources._1, "thingy91_nrf9160");
 assert.deepStrictEqual(shadow._4.Resources._7, "ibasis.iot");
