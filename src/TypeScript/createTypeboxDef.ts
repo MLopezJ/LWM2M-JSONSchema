@@ -52,6 +52,7 @@ const getData = (items: any[]) =>
       const id = element.ObjectID[0];
       const name = element.Name[0];
 
+      // TODO: add explanation why this is taken as a reference
       if (previous[2] === "") {
         return [
           `import { _${id} } from "./types/${id}";`, // import statement
