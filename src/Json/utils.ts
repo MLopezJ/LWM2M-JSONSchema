@@ -15,8 +15,11 @@ export const getType = (type: string): string => {
       return "Boolean";
     case "String":
       return "String";
+    /*
+    // TODO: give a solution for this case. https://github.com/sinclairzx81/typebox/issues/2
     case "Time":
       return "Date";
+    */
     default:
       return "Any";
   }
