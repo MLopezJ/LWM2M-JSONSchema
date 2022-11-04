@@ -120,6 +120,22 @@ const _3304: LwM2M.Object_3304.Humidity = {
   },
 };
 
+const _3323: LwM2M.Object_3323.Pressure = {
+  Name: "Pressure",
+  ObjectURN: "urn:oma:lwm2m:ext:3323:1.1",
+  LWM2MVersion: 1.0,
+  ObjectVersion: 1.1,
+  Resources: {
+    _5518: "2022/10/07, 13:33:22 UTC+0",
+    _5601: 98.24, // float
+    _5602: 98.24,
+    _5603: 30,
+    _5604: 110,
+    _5700: 98.23,
+    _5701: "kPa",
+  },
+};
+
 const _3347: LwM2M.Object_3347.Push_button = {
   Name: "Pressure",
   ObjectURN: "urn:oma:lwm2m:ext:3323:1.1",
@@ -146,4 +162,21 @@ const _10256: LwM2M.Object_10256.ECID_Signal_Measurement_Information = {
     _4: -12,
     _5: 0,
   },
+};
+
+// _50001 and _50009 dont exist on LwM2MN
+
+const shadow = {
+  _1,
+  _3,
+  _4,
+  _5,
+  _6,
+  _3303,
+  _3304,
+  _3323,
+  _3347,
+  _10256,
+  //_50001,
+  //_50009
 };
