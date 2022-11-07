@@ -13,7 +13,7 @@ const _1: LwM2M.Object_1.LwM2M_Server = [
       _3: 0,
       _5: 86400,
       _6: false,
-      _7: "MAuroU",
+      _7: "U",
       _23: false,
       _8: null,
     },
