@@ -178,6 +178,7 @@ export const defineInstaceType = (
     : `Type.Object({${value}})`;
 };
 
+// TODO: add test case
 /**
  * Generates the typescript code of the typebox object definition
  */
