@@ -101,7 +101,7 @@ export const parseData = (
   name: string;
   type: string;
   description: string;
-  isOptional: boolean;
+  mandatoryStatus: string;
   rangeEnumeration: [...(number | null)[]] | null;
   id: string;
   units: string;
@@ -109,11 +109,19 @@ export const parseData = (
   const name = element.Name[0];
   const type = element.Type[0];
   const description = dataCleaning(element.Description[0]);
-  const isOptional = element.Mandatory[0] === "Optional";
+  const mandatoryStatus = element.Mandatory[0];
   const rangeEnumeration = getRangeEnumeration(element.RangeEnumeration[0]);
   const id = element.ATTR.ID;
   const units = element.Units[0];
-  return { name, type, description, isOptional, rangeEnumeration, id, units };
+  return {
+    name,
+    type,
+    description,
+    mandatoryStatus,
+    rangeEnumeration,
+    id,
+    units,
+  };
 };
 
 /**

@@ -18,7 +18,7 @@ describe("json2jsonSchema", () => {
         },
         {
           rangeEnumeration: [1, 65534],
-          isOptional: false,
+          mandatoryStatus: "Mandatory",
           type: "Integer",
           units: "s",
         },
@@ -32,7 +32,7 @@ describe("json2jsonSchema", () => {
         },
         {
           rangeEnumeration: [1, 655, 34],
-          isOptional: true,
+          mandatoryStatus: "Optional",
           type: "String",
           units: "",
         },
@@ -46,7 +46,7 @@ describe("json2jsonSchema", () => {
         },
         {
           rangeEnumeration: null,
-          isOptional: true,
+          mandatoryStatus: "Optional",
           type: "String",
           units: "",
         },
@@ -71,7 +71,7 @@ describe("json2jsonSchema", () => {
           name: "Short Server ID",
           type: expected.type,
           description: "Used as link to associate server Object Instance.",
-          isOptional: expected.isOptional,
+          mandatoryStatus: expected.mandatoryStatus,
           rangeEnumeration: expected.rangeEnumeration,
           id: "0",
           units: expected.units,
