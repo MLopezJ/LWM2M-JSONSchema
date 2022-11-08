@@ -3,8 +3,8 @@ import {
   getObjectProps,
   parseData,
   getRangeEnumeration,
-  defineInstaceType,
-  defineMandatoryStatus,
+  getInstanceType,
+  getMandatoryStatus,
 } from "./json2typebox";
 
 describe("json2jsonSchema", () => {
@@ -310,45 +310,41 @@ describe("json2jsonSchema", () => {
     );
   });
 
-  describe("defineInstaceType", () => {
+  describe("getInstanceType", () => {
     it("Should create a multiple instance type definition", () => {
       const instanceType = "Multiple";
       const value = "";
-      expect(defineInstaceType(instanceType, value)).toStrictEqual(
-        `Type.Array(Type.Object({${value}}))`
+      expect(getInstanceType(instanceType, value)).toStrictEqual(
+        `Type.Array(${value})`
       );
     });
 
     it("Should create a single instance type definition", () => {
       const instanceType = "Single";
       const value = "";
-      expect(defineInstaceType(instanceType, value)).toStrictEqual(
-        `Type.Object({${value}})`
-      );
+      expect(getInstanceType(instanceType, value)).toStrictEqual(`${value}`);
     });
 
     it("Should return error when instance type is different than allowed options", () => {
       const instanceType = "somethingElse";
       const value = "";
-      expect(() => defineInstaceType(instanceType, value)).toThrow(
+      expect(() => getInstanceType(instanceType, value)).toThrow(
         `Instance type is not allowed`
       );
     });
   });
 
-  describe("defineMandatoryStatus", () => {
+  describe("getMandatoryStatus", () => {
     it("Should create a mandatory instance type definition", () => {
       const instanceType = "Mandatory";
       const value = "";
-      expect(defineMandatoryStatus(instanceType, value)).toStrictEqual(
-        `${value}`
-      );
+      expect(getMandatoryStatus(instanceType, value)).toStrictEqual(`${value}`);
     });
 
     it("Should create an optional instance type definition", () => {
       const instanceType = "Optional";
       const value = "";
-      expect(defineMandatoryStatus(instanceType, value)).toStrictEqual(
+      expect(getMandatoryStatus(instanceType, value)).toStrictEqual(
         `Type.Optional(${value})`
       );
     });
@@ -356,7 +352,7 @@ describe("json2jsonSchema", () => {
     it("Should return error when instance type is different than allowed options", () => {
       const instanceType = "somethingElse";
       const value = "";
-      expect(() => defineMandatoryStatus(instanceType, value)).toThrow(
+      expect(() => getMandatoryStatus(instanceType, value)).toThrow(
         `Status specification is not allowed`
       );
     });

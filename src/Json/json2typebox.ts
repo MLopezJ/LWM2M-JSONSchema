@@ -155,7 +155,7 @@ export const getObjectProps = (items: any[]) =>
  * @param object
  * @returns
  */
-export const defineMandatoryStatus = (status: string, object: string) => {
+export const getMandatoryStatus = (status: string, object: string) => {
   if (status !== "Mandatory" && status !== "Optional")
     throw new Error("Status specification is not allowed");
 
@@ -163,6 +163,7 @@ export const defineMandatoryStatus = (status: string, object: string) => {
   return isMandatory ? `${object}` : `Type.Optional(${object})`;
 };
 
+// TODO: update description
 /**
  * Define if definition is an array instance or an object instance taking in consideration
  * the MultipleInstances property from the LwM2m registry
@@ -170,7 +171,7 @@ export const defineMandatoryStatus = (status: string, object: string) => {
  * @param value
  * @returns string
  */
-export const defineInstaceType = (
+export const getInstanceType = (
   instanceType: string,
   value: string
 ): string => {
