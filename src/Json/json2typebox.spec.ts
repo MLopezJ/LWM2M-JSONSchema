@@ -14,12 +14,14 @@ describe("json2jsonSchema", () => {
         {
           rangeEnumeration: ["1..65534"],
           mandatory: ["Mandatory"],
+          multipleInstances: ["Multiple"],
           type: ["Integer"],
           units: ["s"],
         },
         {
           rangeEnumeration: [1, 65534],
           mandatoryStatus: "Mandatory",
+          multipleInstances: "Multiple",
           type: "Integer",
           units: "s",
         },
@@ -28,12 +30,14 @@ describe("json2jsonSchema", () => {
         {
           rangeEnumeration: ["1,655,34"],
           mandatory: ["Optional"],
+          multipleInstances: ["Single"],
           type: ["String"],
           units: [""],
         },
         {
           rangeEnumeration: [1, 655, 34],
           mandatoryStatus: "Optional",
+          multipleInstances: "Single",
           type: "String",
           units: "",
         },
@@ -42,12 +46,14 @@ describe("json2jsonSchema", () => {
         {
           rangeEnumeration: [""],
           mandatory: ["Optional"],
+          multipleInstances: ["Multiple"],
           type: ["String"],
           units: [""],
         },
         {
           rangeEnumeration: null,
           mandatoryStatus: "Optional",
+          multipleInstances: "Multiple",
           type: "String",
           units: "",
         },
@@ -60,7 +66,7 @@ describe("json2jsonSchema", () => {
             ATTR: { ID: "0" },
             Name: ["Short Server ID"],
             Operations: ["R"],
-            MultipleInstances: ["Single"],
+            MultipleInstances: value.multipleInstances,
             Mandatory: value.mandatory,
             Type: value.type,
             RangeEnumeration: value.rangeEnumeration,
@@ -73,6 +79,7 @@ describe("json2jsonSchema", () => {
           type: expected.type,
           description: "Used as link to associate server Object Instance.",
           mandatoryStatus: expected.mandatoryStatus,
+          multipleInstances: expected.multipleInstances,
           rangeEnumeration: expected.rangeEnumeration,
           id: "0",
           units: expected.units,
@@ -88,6 +95,7 @@ describe("json2jsonSchema", () => {
       const description =
         "The number of successive communication attempts before which a communication sequence is considered as failed.";
       const mandatoryStatus = "Mandatory";
+      const multipleInstances = "Single";
       const rangeEnumeration = null;
       const id = "16";
       const units = "";
@@ -96,6 +104,7 @@ describe("json2jsonSchema", () => {
         type,
         description,
         mandatoryStatus,
+        multipleInstances,
         rangeEnumeration,
         id,
         units
@@ -113,6 +122,7 @@ describe("json2jsonSchema", () => {
       const description =
         "The number of successive communication attempts before which a communication sequence is considered as failed.";
       const mandatoryStatus = "Mandatory";
+      const multipleInstances = "Single";
       const rangeEnumeration = [1, 65534];
       const minimum = 1;
       const maximum = 65534;
@@ -123,6 +133,7 @@ describe("json2jsonSchema", () => {
         type,
         description,
         mandatoryStatus,
+        multipleInstances,
         rangeEnumeration,
         id,
         units
@@ -141,6 +152,7 @@ describe("json2jsonSchema", () => {
       const description =
         "The number of successive communication attempts before which a communication sequence is considered as failed.";
       const mandatoryStatus = "Mandatory";
+      const multipleInstances = "Single";
       const rangeEnumeration = null;
       const id = "16";
       const units = "s";
@@ -149,6 +161,7 @@ describe("json2jsonSchema", () => {
         type,
         description,
         mandatoryStatus,
+        multipleInstances,
         rangeEnumeration,
         id,
         units
@@ -165,6 +178,7 @@ describe("json2jsonSchema", () => {
       const description =
         "The number of successive communication attempts before which a communication sequence is considered as failed.";
       const mandatoryStatus = "Optional";
+      const multipleInstances = "Single";
       const rangeEnumeration = null;
       const id = "16";
       const units = "";
@@ -173,6 +187,7 @@ describe("json2jsonSchema", () => {
         type,
         description,
         mandatoryStatus,
+        multipleInstances,
         rangeEnumeration,
         id,
         units
@@ -188,6 +203,7 @@ describe("json2jsonSchema", () => {
       const description =
         "The number of successive communication attempts before which a communication sequence is considered as failed.";
       const mandatoryStatus = "Mandatory";
+      const multipleInstances = "Single";
       const rangeEnumeration = null;
       const id = "16";
       const units = "";
@@ -196,6 +212,7 @@ describe("json2jsonSchema", () => {
         type,
         description,
         mandatoryStatus,
+        multipleInstances,
         rangeEnumeration,
         id,
         units
@@ -204,6 +221,56 @@ describe("json2jsonSchema", () => {
 
       expect(typeboxDefinition).toBe(result);
     });
+
+    it("Should return a typebox definition in string specifying it is a multiple instance", () => {
+      const name = "Communication Retry Count";
+      const type = "Unsigned Integer";
+      const description =
+        "The number of successive communication attempts before which a communication sequence is considered as failed.";
+      const mandatoryStatus = "Mandatory";
+      const multipleInstances = "Multiple";
+      const rangeEnumeration = null;
+      const id = "16";
+      const units = "";
+      const typeboxDefinition = getTypebox(
+        name,
+        type,
+        description,
+        mandatoryStatus,
+        multipleInstances,
+        rangeEnumeration,
+        id,
+        units
+      );
+      const result = `_16: Type.Array(Type.Number({title: 'Communication Retry Count', description: "The number of successive communication attempts before which a communication sequence is considered as failed."}))`;
+
+      expect(typeboxDefinition).toBe(result);
+    });
+  });
+
+  it("Should return a typebox definition in string specifying it is a single instance", () => {
+    const name = "Communication Retry Count";
+    const type = "Unsigned Integer";
+    const description =
+      "The number of successive communication attempts before which a communication sequence is considered as failed.";
+    const mandatoryStatus = "Mandatory";
+    const multipleInstances = "Single";
+    const rangeEnumeration = null;
+    const id = "16";
+    const units = "";
+    const typeboxDefinition = getTypebox(
+      name,
+      type,
+      description,
+      mandatoryStatus,
+      multipleInstances,
+      rangeEnumeration,
+      id,
+      units
+    );
+    const result = `_16: Type.Number({title: 'Communication Retry Count', description: "The number of successive communication attempts before which a communication sequence is considered as failed."})`;
+
+    expect(typeboxDefinition).toBe(result);
   });
 
   describe("getObjectProps", () => {

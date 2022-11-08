@@ -21,6 +21,7 @@ export const getTypebox = (
   type: string,
   description: string,
   mandatoryStatus: string,
+  multipleInstances: string,
   rangeEnumeration: [...(number | null)[]] | null,
   id: string,
   units: string
@@ -100,6 +101,7 @@ export const parseData = (
   type: string;
   description: string;
   mandatoryStatus: string;
+  multipleInstances: string;
   rangeEnumeration: [...(number | null)[]] | null;
   id: string;
   units: string;
@@ -108,6 +110,7 @@ export const parseData = (
   const type = element.Type[0];
   const description = dataCleaning(element.Description[0]);
   const mandatoryStatus = element.Mandatory[0];
+  const multipleInstances = element.MultipleInstances[0];
   const rangeEnumeration = getRangeEnumeration(element.RangeEnumeration[0]);
   const id = element.ATTR.ID;
   const units = element.Units[0];
@@ -116,6 +119,7 @@ export const parseData = (
     type,
     description,
     mandatoryStatus,
+    multipleInstances,
     rangeEnumeration,
     id,
     units,
@@ -134,6 +138,7 @@ export const getObjectProps = (items: any[]) =>
         element.type,
         element.description,
         element.mandatoryStatus,
+        element.multipleInstances,
         element.rangeEnumeration,
         element.id,
         element.units
@@ -187,6 +192,7 @@ export const createDefinition = (Lwm2mRegistry: any): string => {
   const items = Lwm2mRegistry.Resources[0].Item;
   const id: string = Lwm2mRegistry.ObjectID[0];
   const mandatoryStatus = Lwm2mRegistry.Mandatory[0];
+  const multipleInstances = Lwm2mRegistry.MultipleInstances[0];
 
   // object metadata
   const name = `Name: Type.String({examples:["${Lwm2mRegistry.Name[0]}"]})`;
