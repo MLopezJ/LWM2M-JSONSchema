@@ -86,7 +86,7 @@ describe("json2jsonSchema", () => {
       const type = "Unsigned Integer";
       const description =
         "The number of successive communication attempts before which a communication sequence is considered as failed.";
-      const isOptional = false;
+      const mandatoryStatus = "Mandatory";
       const rangeEnumeration = null;
       const id = "16";
       const units = "";
@@ -94,7 +94,7 @@ describe("json2jsonSchema", () => {
         name,
         type,
         description,
-        isOptional,
+        mandatoryStatus,
         rangeEnumeration,
         id,
         units
@@ -111,7 +111,7 @@ describe("json2jsonSchema", () => {
       const type = "Unsigned Integer";
       const description =
         "The number of successive communication attempts before which a communication sequence is considered as failed.";
-      const isOptional = false;
+      const mandatoryStatus = "Mandatory";
       const rangeEnumeration = [1, 65534];
       const minimum = 1;
       const maximum = 65534;
@@ -121,7 +121,7 @@ describe("json2jsonSchema", () => {
         name,
         type,
         description,
-        isOptional,
+        mandatoryStatus,
         rangeEnumeration,
         id,
         units
@@ -139,7 +139,7 @@ describe("json2jsonSchema", () => {
       const type = "Unsigned Integer";
       const description =
         "The number of successive communication attempts before which a communication sequence is considered as failed.";
-      const isOptional = false;
+      const mandatoryStatus = "Mandatory";
       const rangeEnumeration = null;
       const id = "16";
       const units = "s";
@@ -147,7 +147,7 @@ describe("json2jsonSchema", () => {
         name,
         type,
         description,
-        isOptional,
+        mandatoryStatus,
         rangeEnumeration,
         id,
         units
@@ -163,7 +163,7 @@ describe("json2jsonSchema", () => {
       const type = "Unsigned Integer";
       const description =
         "The number of successive communication attempts before which a communication sequence is considered as failed.";
-      const isOptional = true;
+      const mandatoryStatus = "Optional";
       const rangeEnumeration = null;
       const id = "16";
       const units = "";
@@ -171,7 +171,7 @@ describe("json2jsonSchema", () => {
         name,
         type,
         description,
-        isOptional,
+        mandatoryStatus,
         rangeEnumeration,
         id,
         units
@@ -186,7 +186,7 @@ describe("json2jsonSchema", () => {
       const type = "Unsigned Integer";
       const description =
         "The number of successive communication attempts before which a communication sequence is considered as failed.";
-      const isOptional = false;
+      const mandatoryStatus = "Mandatory";
       const rangeEnumeration = null;
       const id = "16";
       const units = "";
@@ -194,7 +194,7 @@ describe("json2jsonSchema", () => {
         name,
         type,
         description,
-        isOptional,
+        mandatoryStatus,
         rangeEnumeration,
         id,
         units

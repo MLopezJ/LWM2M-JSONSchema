@@ -10,7 +10,7 @@ import { keyCleaning } from "./../utils/keyCleaning";
  * @param name
  * @param type
  * @param description
- * @param isOptional
+ * @param mandatoryStatus
  * @param rangeEnumeration
  * @param id
  * @param units
@@ -20,7 +20,7 @@ export const getTypebox = (
   name: string,
   type: string,
   description: string,
-  isOptional: boolean,
+  mandatoryStatus: string,
   rangeEnumeration: [...(number | null)[]] | null,
   id: string,
   units: string
@@ -135,7 +135,7 @@ export const getObjectProps = (items: any[]) =>
         element.name,
         element.type,
         element.description,
-        element.isOptional,
+        element.mandatoryStatus,
         element.rangeEnumeration,
         element.id,
         element.units
