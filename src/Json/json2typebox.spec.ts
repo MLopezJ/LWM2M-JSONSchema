@@ -180,6 +180,29 @@ describe("json2jsonSchema", () => {
 
       expect(typeboxDefinition).toBe(result);
     });
+
+    it("Should return a typebox definition in string specifying mandatory value", () => {
+      const name = "Communication Retry Count";
+      const type = "Unsigned Integer";
+      const description =
+        "The number of successive communication attempts before which a communication sequence is considered as failed.";
+      const isOptional = false;
+      const rangeEnumeration = null;
+      const id = "16";
+      const units = "";
+      const typeboxDefinition = getTypebox(
+        name,
+        type,
+        description,
+        isOptional,
+        rangeEnumeration,
+        id,
+        units
+      );
+      const result = `_16: Type.Number({title: 'Communication Retry Count', description: "The number of successive communication attempts before which a communication sequence is considered as failed."})`;
+
+      expect(typeboxDefinition).toBe(result);
+    });
   });
 
   describe("getObjectProps", () => {
