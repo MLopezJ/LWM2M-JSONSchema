@@ -56,7 +56,14 @@ export const getTypebox = (
   }, "");
 
   const definition = `Type.${getType(type)}({${props}})`;
-  return `_${id}: ${defineMandatoryStatus(mandatoryStatus, definition)}`;
+
+  const object = getTypeboxDefinition(
+    multipleInstances,
+    mandatoryStatus,
+    definition
+  );
+
+  return `_${id}: ${object}`;
 };
 
 // TODO: add description
@@ -179,9 +186,25 @@ export const getInstanceType = (
     throw new Error("Instance type is not allowed");
 
   const isMultipleInstance = instanceType === "Multiple";
-  return isMultipleInstance
-    ? `Type.Array(Type.Object({${value}}))`
-    : `Type.Object({${value}})`;
+  return isMultipleInstance ? `Type.Array(${value})` : `${value}`;
+};
+
+// TODO: take the decision if keep it or remove it.
+/**
+ *
+ * @param multipleInstances
+ * @param mandatoryStatus
+ * @param object
+ * @returns
+ */
+const getTypeboxDefinition = (
+  multipleInstances: string,
+  mandatoryStatus: string,
+  object: string
+) => {
+  let instance = getInstanceType(multipleInstances, object);
+  instance = getMandatoryStatus(mandatoryStatus, instance);
+  return instance;
 };
 
 // TODO: add test case
@@ -206,11 +229,18 @@ export const createDefinition = (Lwm2mRegistry: any): string => {
   const objectData = `${name},${objectUrn},${lwm2mVersion},${objectVersion}, ${resources}},{description: "${dataCleaning(
     description
   )}"`;
-  const typeDefinition = defineInstaceType(
-    Lwm2mRegistry.MultipleInstances[0],
-    objectData
+
+  /* */
+  const object = getTypeboxDefinition(
+    multipleInstances,
+    mandatoryStatus,
+    `Type.Object({${objectData}})`
   );
-  const object = `${defineMandatoryStatus(mandatoryStatus, typeDefinition)}`;
+
+  /*
+  const typeDefinition = getInstanceType(Lwm2mRegistry.MultipleInstances[0]);
+  const object = `${getMandatoryStatus(mandatoryStatus, typeDefinition)}`;
+  */
 
   const typeboxDefinition = `export const _${id} = ${object}`; // FIXME:  { additionalProperties: false },  --> is creating issues. Error message: Expected 1-2 arguments, but got 3.
 
