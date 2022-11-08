@@ -4,6 +4,7 @@ import {
   parseData,
   getRangeEnumeration,
   defineInstaceType,
+  defineMandatoryStatus,
 } from "./json2typebox";
 
 describe("json2jsonSchema", () => {
@@ -264,6 +265,32 @@ describe("json2jsonSchema", () => {
       const value = "";
       expect(() => defineInstaceType(instanceType, value)).toThrow(
         `Instance type is not allowed`
+      );
+    });
+  });
+
+  describe("defineMandatoryStatus", () => {
+    it("Should create a mandatory instance type definition", () => {
+      const instanceType = "Mandatory";
+      const value = "";
+      expect(defineMandatoryStatus(instanceType, value)).toStrictEqual(
+        `${value}`
+      );
+    });
+
+    it("Should create an optional instance type definition", () => {
+      const instanceType = "Optional";
+      const value = "";
+      expect(defineMandatoryStatus(instanceType, value)).toStrictEqual(
+        `Type.Optional(${value})`
+      );
+    });
+
+    it("Should return error when instance type is different than allowed options", () => {
+      const instanceType = "somethingElse";
+      const value = "";
+      expect(() => defineMandatoryStatus(instanceType, value)).toThrow(
+        `Status specification is not allowed`
       );
     });
   });
