@@ -67,20 +67,23 @@ const readJson = async (element: any) => {
         let rangeEnumeration = element.RangeEnumeration[0];
         let unit = element.Units[0];
 
-        rangeEnumeration =
-          rangeEnumeration.trim().length === 0 ? null : rangeEnumeration;
+        // remove \n \r \t 
 
-        unit = unit.trim().length === 0 ? null : unit;
+        rangeEnumeration = rangeEnumeration.replaceAll(/\n/g, " ")
+        .replaceAll(/\r/g, " ")
+        .replaceAll(/\t/g, " ") 
 
-        if (rangeEnumeration !== null)
-          rangeEnumeration = rangeEnumeration
-            .replaceAll(/\n/g, " ")
-            .replaceAll(/\r/g, " ")
-            .replaceAll(/\t/g, " ");
+        unit = unit.replaceAll(/\n/g, " ")
+        .replaceAll(/\r/g, " ")
+        .replaceAll(/\t/g, " ") 
+        
+        // split .. 
+        // check not numerical    
 
         const object = { objectId, itemId, rangeEnumeration, unit };
 
-        if (rangeEnumeration === null) {
+        // empty case
+        if (rangeEnumeration.length  === 0 || rangeEnumeration.trim().length === 0) {
           rangeEnumerationNotDefined.push(object);
           return;
         }
@@ -88,8 +91,10 @@ const readJson = async (element: any) => {
         // check if range is correct
 
         // expected format = NUMBER..NUMBER
-        const check = rangeEnumeration.split(/\D/g);
-        if (check > 3) notM2mFriendly.push(object);
+        const check = rangeEnumeration
+        .split(/[..]|,/g)
+        .some((element: any) => element.length > 0 &&  /\D/g.test(element))
+        if (check ) notM2mFriendly.push(object);
         else m2mFriendly.push(object);
 
         console.log(object);
