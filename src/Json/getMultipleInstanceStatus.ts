@@ -1,4 +1,3 @@
-// TODO: update description
 /**
  * Define if the typebox definition is an array instance or an object instance
  * following the allowed options specified in http://openmobilealliance.org/tech/profiles/LWM2M-v1_1.xsd
