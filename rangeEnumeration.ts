@@ -131,7 +131,7 @@ fs.readdir(dirpath, async (err, files) => {
 
   /**/
   await writeFile(
-    "./rangeEnumerationNotDefined.ts",
+    "./rangeEnumeration/rangeEnumerationNotDefined.ts",
     `const rangeEnumerationNotDefined = [${rangeEnumerationNotDefined.map(
       (element) => {
         return `{ objectId: "${element.objectId}", itemId: "${
@@ -144,7 +144,7 @@ fs.readdir(dirpath, async (err, files) => {
   );
 
   await writeFile(
-    "./m2mFriendly.ts",
+    "./rangeEnumeration/m2mFriendly.ts",
     `const m2mFriendly = [${m2mFriendly.map((element) => {
       return `{ objectId: "${element.objectId}", itemId: "${
         element.itemId
@@ -154,7 +154,7 @@ fs.readdir(dirpath, async (err, files) => {
     })}]`
   );
   await writeFile(
-    "./notM2mFriendly.ts",
+    "./rangeEnumeration/notM2mFriendly.ts",
     `const notM2mFriendly = [${notM2mFriendly.map((element) => {
       return `{ objectId: "${element.objectId}", itemId: "${
         element.itemId
