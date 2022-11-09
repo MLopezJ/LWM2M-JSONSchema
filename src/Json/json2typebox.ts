@@ -30,7 +30,10 @@ export const createDefinition = (Lwm2mRegistry: any): string => {
   let object = `${name},${objectUrn},${lwm2mVersion},${objectVersion}, ${resources}},{description: "${dataCleaning(
     description
   )}"`;
-  object = getMultipleInstanceStatus(multipleInstances, object);
+  object = getMultipleInstanceStatus(
+    multipleInstances,
+    `Type.Object({${object}})`
+  );
   object = getMandatoryStatus(mandatoryStatus, object);
 
   const typeboxDefinition = `export const _${id} = ${object}`; // FIXME:  { additionalProperties: false },  --> is creating issues. Error message: Expected 1-2 arguments, but got 3.
