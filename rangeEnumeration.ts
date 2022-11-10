@@ -92,9 +92,9 @@ const readJson = async (element: any) => {
 
         // expected format = NUMBER..NUMBER
         const check = rangeEnumeration
-        .split(/[..]|,/g)
-        .some((element: any) => element.length > 0 &&  /\D/g.test(element))
-        if (check ) notM2mFriendly.push(object);
+          .split(/[..]|,/g)
+          .some((element: any) => element.length > 0 && isNaN(+element)); // /\D/g.test(element)
+        if (check) notM2mFriendly.push(object);
         else m2mFriendly.push(object);
 
         console.log(object);
