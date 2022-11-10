@@ -67,23 +67,28 @@ const readJson = async (element: any) => {
         let rangeEnumeration = element.RangeEnumeration[0];
         let unit = element.Units[0];
 
-        // remove \n \r \t 
+        // remove \n \r \t
 
-        rangeEnumeration = rangeEnumeration.replaceAll(/\n/g, " ")
-        .replaceAll(/\r/g, " ")
-        .replaceAll(/\t/g, " ") 
+        rangeEnumeration = rangeEnumeration
+          .replaceAll(/\n/g, " ")
+          .replaceAll(/\r/g, " ")
+          .replaceAll(/\t/g, " ");
 
-        unit = unit.replaceAll(/\n/g, " ")
-        .replaceAll(/\r/g, " ")
-        .replaceAll(/\t/g, " ") 
-        
-        // split .. 
-        // check not numerical    
+        unit = unit
+          .replaceAll(/\n/g, " ")
+          .replaceAll(/\r/g, " ")
+          .replaceAll(/\t/g, " ");
+
+        // split ..
+        // check not numerical
 
         const object = { objectId, itemId, rangeEnumeration, unit };
 
         // empty case
-        if (rangeEnumeration.length  === 0 || rangeEnumeration.trim().length === 0) {
+        if (
+          rangeEnumeration.length === 0 ||
+          rangeEnumeration.trim().length === 0
+        ) {
           rangeEnumerationNotDefined.push(object);
           return;
         }
