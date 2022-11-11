@@ -5,6 +5,7 @@ import { getMin } from "../utils/getMin";
 import { getType } from "../utils/getType";
 import { getMandatoryStatus } from "./getMandatoryStatus";
 import { getMultipleInstanceStatus } from "./getMultipleInstanceStatus";
+import { getRangeEnumeration } from "./getRangeEnumeration";
 
 /**
  * Generate typebox definition with received params
@@ -23,7 +24,7 @@ export const createResourceDefinition = (
   description: string,
   mandatoryStatus: string,
   multipleInstances: string,
-  rangeEnumeration: [...(number | null)[]] | null,
+  rangeEnumeration: string,
   id: string,
   units: string
 ): string => {
@@ -31,13 +32,19 @@ export const createResourceDefinition = (
   let maximum = undefined;
   let enumeration = undefined;
 
-  if (rangeEnumeration !== null) {
-    minimum = rangeEnumeration[0];
-    maximum = rangeEnumeration[1];
-    if (rangeEnumeration.length > 2) {
-      minimum = getMin(rangeEnumeration);
-      maximum = getMax(rangeEnumeration);
-      enumeration = rangeEnumeration;
+  const rangeEnumObject: {
+    invalidFormat: boolean;
+    value: string | Number | Number[] | String[] | null;
+    dataStruct?: "enum" | "range" | undefined;
+  } = getRangeEnumeration(rangeEnumeration);
+
+  let desc = `"${dataCleaning(description)}`;
+  if (rangeEnumObject.invalidFormat === true) {
+    desc = `"${desc} ... "${rangeEnumObject.value}"`;
+  } else {
+    if (rangeEnumObject.dataStruct === "range") {
+      minimum = (rangeEnumObject.value as any)[0];
+      maximum = (rangeEnumObject.value as any)[1];
     }
   }
 
