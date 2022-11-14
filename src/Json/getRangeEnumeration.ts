@@ -16,14 +16,40 @@
 export const isInvalidFormat = (element: string) =>
   element.split(/[..]|,/g).some((element) => /\s/.test(element.trim()));
 
+/**
+ * Check if format is followed
+ * Format:
+ *  VALUE..VALUE
+ * @param element
+ * @returns
+ */
 export const isRangeFormat = (element: string) =>
-  element.split("..").length > 1;
+  element.length >= 4 && element.split("..").length === 2;
 
-const isSingleEnum = (element: string) =>
+/**
+ * Check if format is followed
+ * Format:
+ *  VALUE
+ * @param element
+ * @returns
+ */
+export const isSingleEnum = (element: string) =>
   element.split(/[..]|,|' '/g).length === 1;
 
-const isListEnum = (element: string) => element.split(",").length > 1;
+/**
+ * Check if format is followed
+ * Format:
+ *  VALUE, VALUE, VALUE
+ * @param element
+ * @returns
+ */
+export const isListEnum = (element: string) => element.split(",").length > 1;
 
+/**
+ * Check if value is an empty string
+ * @param element
+ * @returns
+ */
 const isEmptyValue = (element: string) => element.trim().length === 0;
 
 /**
