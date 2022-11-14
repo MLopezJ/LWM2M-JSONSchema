@@ -38,9 +38,9 @@ export const createResourceDefinition = (
     dataStruct?: "enum" | "range" | undefined;
   } = getRangeEnumeration(rangeEnumeration);
 
-  let desc = `"${dataCleaning(description)}`;
+  let desc = `${dataCleaning(description)}`;
   if (rangeEnumObject.invalidFormat === true) {
-    desc = `"${desc} ... "${rangeEnumObject.value}"`;
+    desc = `${desc} ... ${rangeEnumObject.value}`; // TODO: improve description
   } else {
     if (rangeEnumObject.dataStruct === "range") {
       minimum = (rangeEnumObject.value as any)[0];
@@ -50,7 +50,7 @@ export const createResourceDefinition = (
 
   const props = [
     `title: '${name}'`,
-    `description: "${dataCleaning(description)}"`,
+    `description: "${desc}"`,
     minimum !== undefined ? `minimum: ${minimum}` : undefined,
     maximum !== undefined ? `maximum: ${maximum}` : undefined,
     enumeration !== undefined ? `enumeration: [${enumeration}]` : undefined,
@@ -64,6 +64,29 @@ export const createResourceDefinition = (
   }, "");
 
   let object = `Type.${getType(type)}({${props}})`;
+  if (rangeEnumObject.dataStruct === "enum") {
+    if (
+      typeof rangeEnumObject.value === "number" ||
+      typeof rangeEnumObject.value === "string"
+    ) {
+      const isString = isNaN(+(rangeEnumObject.value as any));
+      object = isString
+        ? `Type.Literal('${rangeEnumObject.value}, {${props}}')`
+        : `Type.Literal(${Number(rangeEnumObject.value)}, {${props}})`;
+    } else {
+      // list case
+      object = `Type.Union([${(rangeEnumObject.value as any).map(
+        (element: string | number) => {
+          const isString = isNaN(+element);
+          return isString
+            ? `Type.Literal('${element}')`
+            : `Type.Literal(${Number(element)})`;
+        }
+      )}],{${props}} )`;
+    }
+  }
+
+  //let object = `Type.${getType(type)}({${props}})`;
   object = getMultipleInstanceStatus(multipleInstances, object);
   object = getMandatoryStatus(mandatoryStatus, object);
 
