@@ -8,7 +8,7 @@ describe("createResourceDefinition", () => {
       "The number of successive communication attempts before which a communication sequence is considered as failed.";
     const mandatoryStatus = "Mandatory";
     const multipleInstances = "Single";
-    const rangeEnumeration = null;
+    const rangeEnumeration = "";
     const id = "16";
     const units = "";
     const typeboxDefinition = createResourceDefinition(
@@ -35,7 +35,7 @@ describe("createResourceDefinition", () => {
       "The number of successive communication attempts before which a communication sequence is considered as failed.";
     const mandatoryStatus = "Mandatory";
     const multipleInstances = "Single";
-    const rangeEnumeration = [1, 65534];
+    const rangeEnumeration = "1..65534";
     const minimum = 1;
     const maximum = 65534;
     const id = "16";
@@ -65,7 +65,7 @@ describe("createResourceDefinition", () => {
       "The number of successive communication attempts before which a communication sequence is considered as failed.";
     const mandatoryStatus = "Mandatory";
     const multipleInstances = "Single";
-    const rangeEnumeration = null;
+    const rangeEnumeration = "";
     const id = "16";
     const units = "s";
     const typeboxDefinition = createResourceDefinition(
@@ -91,7 +91,7 @@ describe("createResourceDefinition", () => {
       "The number of successive communication attempts before which a communication sequence is considered as failed.";
     const mandatoryStatus = "Optional";
     const multipleInstances = "Single";
-    const rangeEnumeration = null;
+    const rangeEnumeration = "";
     const id = "16";
     const units = "";
     const typeboxDefinition = createResourceDefinition(
@@ -116,7 +116,7 @@ describe("createResourceDefinition", () => {
       "The number of successive communication attempts before which a communication sequence is considered as failed.";
     const mandatoryStatus = "Mandatory";
     const multipleInstances = "Single";
-    const rangeEnumeration = null;
+    const rangeEnumeration = "";
     const id = "16";
     const units = "";
     const typeboxDefinition = createResourceDefinition(
@@ -141,7 +141,7 @@ describe("createResourceDefinition", () => {
       "The number of successive communication attempts before which a communication sequence is considered as failed.";
     const mandatoryStatus = "Mandatory";
     const multipleInstances = "Multiple";
-    const rangeEnumeration = null;
+    const rangeEnumeration = "";
     const id = "16";
     const units = "";
     const typeboxDefinition = createResourceDefinition(
@@ -166,7 +166,7 @@ describe("createResourceDefinition", () => {
       "The number of successive communication attempts before which a communication sequence is considered as failed.";
     const mandatoryStatus = "Mandatory";
     const multipleInstances = "Single";
-    const rangeEnumeration = null;
+    const rangeEnumeration = "";
     const id = "16";
     const units = "";
     const typeboxDefinition = createResourceDefinition(
