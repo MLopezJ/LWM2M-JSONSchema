@@ -30,7 +30,6 @@ export const createResourceDefinition = (
 ): string => {
   let minimum = undefined;
   let maximum = undefined;
-  let enumeration = undefined;
 
   const rangeEnumObject: {
     invalidFormat: boolean;
@@ -53,7 +52,6 @@ export const createResourceDefinition = (
     `description: "${desc}"`,
     minimum !== undefined ? `minimum: ${minimum}` : undefined,
     maximum !== undefined ? `maximum: ${maximum}` : undefined,
-    enumeration !== undefined ? `enumeration: [${enumeration}]` : undefined,
     units ? `units: '${cleanUnits(units)}'` : undefined,
   ].reduce((previous, current, index) => {
     if (current) {
