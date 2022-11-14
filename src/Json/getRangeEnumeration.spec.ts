@@ -1,4 +1,10 @@
-import { getRangeEnumeration, isInvalidFormat } from "./getRangeEnumeration";
+import {
+  getRangeEnumeration,
+  isInvalidFormat,
+  isRangeFormat,
+  isSingleEnum,
+  isListEnum,
+} from "./getRangeEnumeration";
 
 describe("isInvalidFormat", () => {
   it.each([
@@ -21,6 +27,50 @@ describe("isInvalidFormat", () => {
     ["ValidCase", false],
   ])("Should check if format is invalid: %p -> %p", (value, expected) =>
     expect(isInvalidFormat(value)).toStrictEqual(expected)
+  );
+});
+
+describe("isRangeFormat", () => {
+  it.each([
+    ["..", false],
+    ["1..", false],
+    ["..2", false],
+    ["0..2", true],
+    ["-10..-2", true],
+    ["0..2..10", false],
+    ["1", false],
+    ["1,2,3,4", false],
+  ])("Should check if range format is followed: %p -> %p", (value, expected) =>
+    expect(isRangeFormat(value)).toStrictEqual(expected)
+  );
+});
+
+describe("isSingleEnum", () => {
+  it.each([
+    ["1", true],
+    ["1     ", true],
+    ["\n1", true],
+    ["\n\t1", true],
+    ["\n\t1\n\t", true],
+    ["1,2,3,4", false],
+    ["0..2", false],
+    ["-10..-2", false],
+  ])(
+    "Should check if single enum format is followed: %p -> %p",
+    (value, expected) => expect(isSingleEnum(value)).toStrictEqual(expected)
+  );
+});
+
+describe("isListEnum", () => {
+  it.each([
+    ["1,2,3,4", true],
+    ["-1,2,-3,4", true],
+    ["1.2.3.4", false],
+    ["0..2", false],
+    ["1", false],
+  ])(
+    "Should check if list enum format is followed: %p -> %p",
+    (value, expected) => expect(isListEnum(value)).toStrictEqual(expected)
   );
 });
 
