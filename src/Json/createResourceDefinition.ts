@@ -28,28 +28,36 @@ export const createResourceDefinition = (
   id: string,
   units: string
 ): string => {
-  let minimum = undefined;
-  let maximum = undefined;
-
   const rangeEnumObject: {
     invalidFormat: boolean;
     value: string | Number | Number[] | String[] | null;
     dataStruct?: "enum" | "range" | undefined;
   } = getRangeEnumeration(rangeEnumeration);
 
-  let desc = `${dataCleaning(description)}`;
+  // rules:
+  // 1- if range enumeration is invalid format, the description should contain the value of range enumeration
+
+  // 2- if range enumeration si valid and is range type, add max and min to props
+
+  // 3- if range enumeration is valid and type is enum and single isntance, check if is string and generate literal based on that
+
+  // 4- if range enumeration is valid and type is enum and is list, check type of every item and create definition
+
+  let descriptionValue = `${dataCleaning(description)}`;
   if (rangeEnumObject.invalidFormat === true) {
-    desc = `${desc} ... ${rangeEnumObject.value}`; // TODO: improve description
-  } else {
-    if (rangeEnumObject.dataStruct === "range") {
-      minimum = (rangeEnumObject.value as any)[0];
-      maximum = (rangeEnumObject.value as any)[1];
-    }
+    descriptionValue = `${descriptionValue} ... ${rangeEnumObject.value}`; // TODO: improve description
+  }
+
+  let minimum = undefined;
+  let maximum = undefined;
+  if (rangeEnumObject.dataStruct === "range") {
+    minimum = (rangeEnumObject.value as any)[0];
+    maximum = (rangeEnumObject.value as any)[1];
   }
 
   const props = [
     `title: '${name}'`,
-    `description: "${desc}"`,
+    `description: "${descriptionValue}"`,
     minimum !== undefined ? `minimum: ${minimum}` : undefined,
     maximum !== undefined ? `maximum: ${maximum}` : undefined,
     units ? `units: '${cleanUnits(units)}'` : undefined,
@@ -65,25 +73,7 @@ export const createResourceDefinition = (
   // TODO: add test cases
   let object = `Type.${getType(type)}({${props}})`;
   if (rangeEnumObject.dataStruct === "enum") {
-    if (
-      typeof rangeEnumObject.value === "number" ||
-      typeof rangeEnumObject.value === "string"
-    ) {
-      const isString = isNaN(+(rangeEnumObject.value as any));
-      object = isString
-        ? `Type.Literal('${rangeEnumObject.value}, {${props}}')`
-        : `Type.Literal(${Number(rangeEnumObject.value)}, {${props}})`;
-    } else {
-      // list case
-      object = `Type.Union([${(rangeEnumObject.value as any).map(
-        (element: string | number) => {
-          const isString = isNaN(+element);
-          return isString
-            ? `Type.Literal('${element}')`
-            : `Type.Literal(${Number(element)})`;
-        }
-      )}],{${props}} )`;
-    }
+    object = createEnumDefinition(rangeEnumObject.value as any, props as any); // TODO: fix this
   }
 
   //let object = `Type.${getType(type)}({${props}})`;
@@ -92,3 +82,37 @@ export const createResourceDefinition = (
 
   return `_${id}: ${object}`;
 };
+
+/**
+ *
+ * @param value
+ * @param props
+ * @returns
+ */
+const createEnumDefinition = (value: string | number | [], props: string) => {
+  if (typeof value === "number" || typeof value === "string") {
+    const isString = isNaN(+(value as any));
+    return createLiteralDefinition(isString, value, props);
+  } else {
+    // list case
+    return `Type.Union([${(value as any).map((element: string | number) => {
+      return createLiteralDefinition(isNaN(+element), element, props);
+    })}],{${props}} )`;
+  }
+};
+
+/**
+ * Create custom "literal" type definition
+ * @param isString
+ * @param value
+ * @param props
+ * @returns
+ */
+const createLiteralDefinition = (
+  isString: boolean,
+  value: string | number,
+  props: string
+): string =>
+  isString
+    ? `Type.Literal('${value}, {${props}}')`
+    : `Type.Literal(${value}, {${props}})`;
