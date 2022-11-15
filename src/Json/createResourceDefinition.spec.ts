@@ -191,23 +191,38 @@ describe("createResourceDefinition", () => {
 
 describe("createLiteralDefinition", () => {
   it.each([
-    [{ isString: true, value: "a", props: "" }, `Type.Literal('a', {})`],
-    [{ isString: false, value: 1, props: "" }, `Type.Literal(1, {})`],
+    [
+      { isString: true, isUnion: false, value: "a", props: "" },
+      `Type.Literal('a' ,{})`,
+    ],
+    [
+      { isString: false, isUnion: false, value: 1, props: "" },
+      `Type.Literal(1 ,{})`,
+    ],
   ])("Should create a 'Literal' typebox definition", (params, expected) => {
     expect(
-      createLiteralDefinition(params.isString, params.value, params.props)
+      createLiteralDefinition(
+        params.isString,
+        params.isUnion,
+        params.value,
+        params.props
+      )
     ).toBe(expected);
   });
 });
 
 describe("createEnumDefinition", () => {
   it.each([
-    [{ value: "a", props: "" }, `Type.Literal('a', {})`],
-    [{ value: 1, props: "" }, `Type.Literal(1, {})`],
+    [{ value: "a", props: "" }, `Type.Literal('a' ,{})`],
+    [{ value: 1, props: "" }, `Type.Literal(1 ,{})`],
     [
       { value: [1, 2, 3], props: "" },
-      `Type.Union([Type.Literal(1, {}),Type.Literal(2, {}),Type.Literal(3, {})],{})`,
-    ], // Type.Literal(1)
+      `Type.Union([Type.Literal(1 ),Type.Literal(2 ),Type.Literal(3 )],{})`,
+    ],
+    [
+      { value: ["a", "b", "c"], props: "" },
+      `Type.Union([Type.Literal('a' ),Type.Literal('b' ),Type.Literal('c' )],{})`,
+    ],
   ])("Should create a 'Enum' typebox definition", (params, expected) => {
     expect(createEnumDefinition(params.value, params.props)).toBe(expected);
   });

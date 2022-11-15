@@ -95,11 +95,11 @@ export const createEnumDefinition = (
 ) => {
   if (typeof value === "number" || typeof value === "string") {
     const isString = isNaN(+(value as any));
-    return createLiteralDefinition(isString, value, props);
+    return createLiteralDefinition(isString, false, value, props);
   } else {
     // list case
     return `Type.Union([${(value as any).map((element: string | number) => {
-      return createLiteralDefinition(isNaN(+element), element, props);
+      return createLiteralDefinition(isNaN(+element), true, element, props);
     })}],{${props}})`;
   }
 };
@@ -107,15 +107,17 @@ export const createEnumDefinition = (
 /**
  * Create custom "literal" type definition
  * @param isString
+ * @param isUnion
  * @param value
  * @param props
  * @returns
  */
 export const createLiteralDefinition = (
   isString: boolean,
+  isUnion: boolean,
   value: string | number,
   props: string
 ): string =>
   isString
-    ? `Type.Literal('${value}', {${props}})`
-    : `Type.Literal(${value}, {${props}})`;
+    ? `Type.Literal('${value}' ${isUnion ? "" : `,{${props}}`})`
+    : `Type.Literal(${value} ${isUnion ? "" : `,{${props}}`})`;
