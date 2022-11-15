@@ -89,7 +89,10 @@ export const createResourceDefinition = (
  * @param props
  * @returns
  */
-const createEnumDefinition = (value: string | number | [], props: string) => {
+export const createEnumDefinition = (
+  value: string | number | number[] | string[],
+  props: string
+) => {
   if (typeof value === "number" || typeof value === "string") {
     const isString = isNaN(+(value as any));
     return createLiteralDefinition(isString, value, props);
@@ -97,7 +100,7 @@ const createEnumDefinition = (value: string | number | [], props: string) => {
     // list case
     return `Type.Union([${(value as any).map((element: string | number) => {
       return createLiteralDefinition(isNaN(+element), element, props);
-    })}],{${props}} )`;
+    })}],{${props}})`;
   }
 };
 

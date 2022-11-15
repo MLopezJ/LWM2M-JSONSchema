@@ -1,6 +1,7 @@
 import {
   createResourceDefinition,
   createLiteralDefinition,
+  createEnumDefinition,
 } from "./createResourceDefinition";
 
 describe("createResourceDefinition", () => {
@@ -196,5 +197,18 @@ describe("createLiteralDefinition", () => {
     expect(
       createLiteralDefinition(params.isString, params.value, params.props)
     ).toBe(expected);
+  });
+});
+
+describe("createEnumDefinition", () => {
+  it.each([
+    [{ value: "a", props: "" }, `Type.Literal('a', {})`],
+    [{ value: 1, props: "" }, `Type.Literal(1, {})`],
+    [
+      { value: [1, 2, 3], props: "" },
+      `Type.Union([Type.Literal(1, {}),Type.Literal(2, {}),Type.Literal(3, {})],{})`,
+    ], // Type.Literal(1)
+  ])("Should create a 'Enum' typebox definition", (params, expected) => {
+    expect(createEnumDefinition(params.value, params.props)).toBe(expected);
   });
 });
