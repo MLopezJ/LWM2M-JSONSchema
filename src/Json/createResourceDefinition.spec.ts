@@ -187,6 +187,30 @@ describe("createResourceDefinition", () => {
 
     expect(typeboxDefinition).toBe(result);
   });
+
+  it("Should check typebox definition when rangeEnumeration format is invalid", () => {
+    const name = "name";
+    const type = "Integer";
+    const description = "Description";
+    const mandatoryStatus = "Mandatory";
+    const multipleInstances = "Single";
+    const rangeEnumeration = "0..255 bytes";
+    const id = "16";
+    const units = "";
+    const typeboxDefinition = createResourceDefinition(
+      name,
+      type,
+      description,
+      mandatoryStatus,
+      multipleInstances,
+      rangeEnumeration,
+      id,
+      units
+    );
+    const result = `_16: Type.Number({title: 'name', description: "Description ... 0..255 bytes"})`;
+
+    expect(typeboxDefinition).toBe(result);
+  });
 });
 
 describe("createLiteralDefinition", () => {
