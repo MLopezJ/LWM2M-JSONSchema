@@ -34,15 +34,6 @@ export const createResourceDefinition = (
     dataStruct?: "enum" | "range" | undefined;
   } = getRangeEnumeration(rangeEnumeration);
 
-  // rules:
-  // 1- if range enumeration is invalid format, the description should contain the value of range enumeration
-
-  // 2- if range enumeration si valid and is range type, add max and min to props
-
-  // 3- if range enumeration is valid and type is enum and single isntance, check if is string and generate literal based on that
-
-  // 4- if range enumeration is valid and type is enum and is list, check type of every item and create definition
-
   let descriptionValue = `${dataCleaning(description)}`;
   if (
     rangeEnumObject.invalidFormat === true &&
@@ -76,10 +67,9 @@ export const createResourceDefinition = (
 
   let object = `Type.${getType(type)}({${props}})`;
   if (rangeEnumObject.dataStruct === "enum") {
-    object = createEnumDefinition(rangeEnumObject.value as any, props as any); // TODO: fix this
+    object = createEnumDefinition(rangeEnumObject.value as any, props as any);
   }
 
-  //let object = `Type.${getType(type)}({${props}})`;
   object = getMultipleInstanceStatus(multipleInstances, object);
   object = getMandatoryStatus(mandatoryStatus, object);
 
