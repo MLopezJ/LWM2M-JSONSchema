@@ -89,7 +89,7 @@ export const createResourceDefinition = (
 };
 
 /**
- *
+ * Create an enumeration definition from a single instance or a list of values
  * @param value
  * @param props
  * @returns
