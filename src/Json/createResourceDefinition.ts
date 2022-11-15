@@ -74,8 +74,6 @@ export const createResourceDefinition = (
     return previous;
   }, "");
 
-  // TODO: improve code
-  // TODO: add test cases
   let object = `Type.${getType(type)}({${props}})`;
   if (rangeEnumObject.dataStruct === "enum") {
     object = createEnumDefinition(rangeEnumObject.value as any, props as any); // TODO: fix this
