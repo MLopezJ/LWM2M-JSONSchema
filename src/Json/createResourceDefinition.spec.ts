@@ -259,6 +259,30 @@ describe("createResourceDefinition", () => {
 
     expect(typeboxDefinition).toBe(result);
   });
+
+  it("Should check typebox definition when rangeEnumeration format is a list", () => {
+    const name = "name";
+    const type = "Integer";
+    const description = "Description";
+    const mandatoryStatus = "Mandatory";
+    const multipleInstances = "Single";
+    const rangeEnumeration = "0, 1, 2";
+    const id = "16";
+    const units = "";
+    const typeboxDefinition = createResourceDefinition(
+      name,
+      type,
+      description,
+      mandatoryStatus,
+      multipleInstances,
+      rangeEnumeration,
+      id,
+      units
+    );
+    const result = `_16: Type.Union([Type.Literal(0 ),Type.Literal(1 ),Type.Literal(2 )],{title: 'name', description: "Description"})`;
+
+    expect(typeboxDefinition).toBe(result);
+  });
 });
 
 describe("createLiteralDefinition", () => {
