@@ -7,11 +7,11 @@ import {
 } from "./getRangeEnumeration";
 
 describe("isInvalidFormat", () => {
-  it.each([
+  it.only.each([
     ["", false],
     ["\r\n        ", false],
     ["\r\n        \r\n ", false],
-    ["\r\n    0..255 bytes    \r\n ", true],
+    ["ValidCase", false],
     ["\r\n    0..255    \r\n ", false],
     ["\r\n    1,2,3    \r\n ", false],
     ["\r\n    1    \r\n ", false],
@@ -24,7 +24,14 @@ describe("isInvalidFormat", () => {
     ["1..64 Bytes", true],
     ["0..255 Gigabyte", true],
     ["no valid case", true],
-    ["ValidCase", false],
+    ["\r\n    0..255 bytes    \r\n ", true],
+    ["AVAILABLE; UNAVAILABLE", true],
+    ["0..2^28-1", true],
+    ["0; 3.8..20.5", true],
+    ["<7 to >12.5", true],
+    ["8-Bits", true],
+    ["2 Instances", true],
+    ["1: normal\r\n\t\t\t\t2: remote\r\n\t\t\t\t3: local", true],
   ])("Should check if format is invalid: %p -> %p", (value, expected) =>
     expect(isInvalidFormat(value)).toStrictEqual(expected)
   );
