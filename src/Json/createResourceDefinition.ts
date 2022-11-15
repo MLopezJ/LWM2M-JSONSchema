@@ -44,8 +44,13 @@ export const createResourceDefinition = (
   // 4- if range enumeration is valid and type is enum and is list, check type of every item and create definition
 
   let descriptionValue = `${dataCleaning(description)}`;
-  if (rangeEnumObject.invalidFormat === true) {
-    descriptionValue = `${descriptionValue} ... ${rangeEnumObject.value}`; // TODO: improve description
+  if (
+    rangeEnumObject.invalidFormat === true &&
+    rangeEnumObject.value !== "null"
+  ) {
+    descriptionValue = `${descriptionValue} ... ${dataCleaning(
+      rangeEnumObject.value as any
+    )}`; // TODO: improve description
   }
 
   let minimum = undefined;
