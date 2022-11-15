@@ -75,6 +75,9 @@ export const getRangeEnumeration = (
 
   if (isRangeFormat(value)) {
     const [min, max] = value.split("..");
+    if (isNaN(+min) || isNaN(+max))
+      return { invalidFormat: true, value: value };
+
     return { invalidFormat: false, value: [+min, +max], dataStruct: "range" };
   }
 

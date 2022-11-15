@@ -118,11 +118,9 @@ describe("getRangeEnumeration", () => {
     ["0..255 bytes", { invalidFormat: true, value: "0..255 bytes" }],
     ["1..64 Bytes", { invalidFormat: true, value: "1..64 Bytes" }],
     ["0..255 Gigabyte", { invalidFormat: true, value: "0..255 Gigabyte" }],
+    ["0..2^28-1", { invalidFormat: true, value: "0..2^28-1" }],
     ["no valid case", { invalidFormat: true, value: "no valid case" }],
-    [
-      "ValidCase",
-      { invalidFormat: false, value: "ValidCase", dataStruct: "enum" },
-    ],
+    ["8-Bits", { invalidFormat: false, value: "8-Bits", dataStruct: "enum" }],
   ])("Should return range enumeration object: %p -> %p", (value, expected) =>
     expect(getRangeEnumeration(value)).toStrictEqual(expected)
   );
