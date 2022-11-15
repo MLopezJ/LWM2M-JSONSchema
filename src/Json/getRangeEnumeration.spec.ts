@@ -8,18 +8,6 @@ import {
 
 describe("isInvalidFormat", () => {
   it.only.each([
-    ["", false],
-    ["\r\n        ", false],
-    ["\r\n        \r\n ", false],
-    ["ValidCase", false],
-    ["\r\n    0..255    \r\n ", false],
-    ["\r\n    1,2,3    \r\n ", false],
-    ["\r\n    1    \r\n ", false],
-    ["0", false],
-    ["value", false],
-    ["0..125", false],
-    ["1..256", false],
-    ["16,32,48", false],
     ["0..255 bytes", true],
     ["1..64 Bytes", true],
     ["0..255 Gigabyte", true],
@@ -32,7 +20,24 @@ describe("isInvalidFormat", () => {
     ["8-Bits", true],
     ["2 Instances", true],
     ["1: normal\r\n\t\t\t\t2: remote\r\n\t\t\t\t3: local", true],
-  ])("Should check if format is invalid: %p -> %p", (value, expected) =>
+  ])("Should check invalid format: %p", (value, expected) =>
+    expect(isInvalidFormat(value)).toStrictEqual(expected)
+  );
+
+  it.only.each([
+    ["", false],
+    ["\r\n        ", false],
+    ["\r\n        \r\n ", false],
+    ["ValidCase", false],
+    ["\r\n    0..255    \r\n ", false],
+    ["\r\n    1,2,3    \r\n ", false],
+    ["\r\n    1    \r\n ", false],
+    ["0", false],
+    ["value", false],
+    ["0..125", false],
+    ["1..256", false],
+    ["16,32,48", false],
+  ])("Should check valid format: %p", (value, expected) =>
     expect(isInvalidFormat(value)).toStrictEqual(expected)
   );
 });
