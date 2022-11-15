@@ -235,6 +235,30 @@ describe("createResourceDefinition", () => {
 
     expect(typeboxDefinition).toBe(result);
   });
+
+  it("Should check typebox definition when rangeEnumeration format is a single instance", () => {
+    const name = "name";
+    const type = "Integer";
+    const description = "Description";
+    const mandatoryStatus = "Mandatory";
+    const multipleInstances = "Single";
+    const rangeEnumeration = "0";
+    const id = "16";
+    const units = "";
+    const typeboxDefinition = createResourceDefinition(
+      name,
+      type,
+      description,
+      mandatoryStatus,
+      multipleInstances,
+      rangeEnumeration,
+      id,
+      units
+    );
+    const result = `_16: Type.Literal(0 ,{title: 'name', description: "Description"})`;
+
+    expect(typeboxDefinition).toBe(result);
+  });
 });
 
 describe("createLiteralDefinition", () => {
