@@ -108,11 +108,11 @@ const createEnumDefinition = (value: string | number | [], props: string) => {
  * @param props
  * @returns
  */
-const createLiteralDefinition = (
+export const createLiteralDefinition = (
   isString: boolean,
   value: string | number,
   props: string
 ): string =>
   isString
-    ? `Type.Literal('${value}, {${props}}')`
+    ? `Type.Literal('${value}', {${props}})`
     : `Type.Literal(${value}, {${props}})`;

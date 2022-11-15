@@ -1,4 +1,7 @@
-import { createResourceDefinition } from "./createResourceDefinition";
+import {
+  createResourceDefinition,
+  createLiteralDefinition,
+} from "./createResourceDefinition";
 
 describe("createResourceDefinition", () => {
   it("Should return a typebox definition in string", () => {
@@ -182,5 +185,16 @@ describe("createResourceDefinition", () => {
     const result = `_16: Type.Number({title: 'Communication Retry Count', description: "The number of successive communication attempts before which a communication sequence is considered as failed."})`;
 
     expect(typeboxDefinition).toBe(result);
+  });
+});
+
+describe("createLiteralDefinition", () => {
+  it.each([
+    [{ isString: true, value: "a", props: "" }, `Type.Literal('a', {})`],
+    [{ isString: false, value: 1, props: "" }, `Type.Literal(1, {})`],
+  ])("Should create a 'Literal' typebox definition", (params, expected) => {
+    expect(
+      createLiteralDefinition(params.isString, params.value, params.props)
+    ).toBe(expected);
   });
 });
