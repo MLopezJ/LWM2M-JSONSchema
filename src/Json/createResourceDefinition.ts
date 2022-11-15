@@ -48,9 +48,9 @@ export const createResourceDefinition = (
     rangeEnumObject.invalidFormat === true &&
     rangeEnumObject.value !== "null"
   ) {
-    descriptionValue = `${descriptionValue} ... ${dataCleaning(
+    descriptionValue = `${descriptionValue}. RangeEnumeration is not following the defined standard by openmobilealliance.org and for that reason value is not contemplate in the type definition. Original RangeEnumeration value: '${dataCleaning(
       rangeEnumObject.value as any
-    )}`; // TODO: improve description
+    )}'`;
   }
 
   let minimum = undefined;

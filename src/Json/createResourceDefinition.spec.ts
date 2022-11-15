@@ -263,15 +263,15 @@ describe("createResourceDefinition", () => {
   it.each([
     [
       "0..255 bytes",
-      `_16: Type.Number({title: 'name', description: "Description ... 0..255 bytes"})`,
+      `_16: Type.Number({title: 'name', description: "Description. RangeEnumeration is not following the defined standard by openmobilealliance.org and for that reason value is not contemplate in the type definition. Original RangeEnumeration value: '0..255 bytes'"})`,
     ],
     [
       "1: normal\r\n\t\t\t\t2: remote\r\n\t\t\t\t3: local",
-      `_16: Type.Number({title: 'name', description: "Description ... 1: normal      2: remote      3: local"})`,
+      `_16: Type.Number({title: 'name', description: "Description. RangeEnumeration is not following the defined standard by openmobilealliance.org and for that reason value is not contemplate in the type definition. Original RangeEnumeration value: '1: normal      2: remote      3: local'"})`,
     ],
     [
       "<7 to >12.5",
-      `_16: Type.Number({title: 'name', description: "Description ... <7 to >12.5"})`,
+      `_16: Type.Number({title: 'name', description: "Description. RangeEnumeration is not following the defined standard by openmobilealliance.org and for that reason value is not contemplate in the type definition. Original RangeEnumeration value: '<7 to >12.5'"})`,
     ],
   ])(
     "Should check typebox definition when rangeEnumeration format is invalid",
