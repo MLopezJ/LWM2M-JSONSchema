@@ -1,7 +1,5 @@
 import { cleanUnits } from "../utils/cleanUnits";
 import { dataCleaning } from "../utils/dataCleaning";
-import { getMax } from "../utils/getMax";
-import { getMin } from "../utils/getMin";
 import { getType } from "../utils/getType";
 import { getMandatoryStatus } from "./getMandatoryStatus";
 import { getMultipleInstanceStatus } from "./getMultipleInstanceStatus";
