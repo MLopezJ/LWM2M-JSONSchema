@@ -188,30 +188,6 @@ describe("createResourceDefinition", () => {
     expect(typeboxDefinition).toBe(result);
   });
 
-  it("Should check typebox definition when rangeEnumeration format is invalid", () => {
-    const name = "name";
-    const type = "Integer";
-    const description = "Description";
-    const mandatoryStatus = "Mandatory";
-    const multipleInstances = "Single";
-    const rangeEnumeration = "0..255 bytes";
-    const id = "16";
-    const units = "";
-    const typeboxDefinition = createResourceDefinition(
-      name,
-      type,
-      description,
-      mandatoryStatus,
-      multipleInstances,
-      rangeEnumeration,
-      id,
-      units
-    );
-    const result = `_16: Type.Number({title: 'name', description: "Description ... 0..255 bytes"})`;
-
-    expect(typeboxDefinition).toBe(result);
-  });
-
   it("Should check typebox definition when rangeEnumeration format is a range", () => {
     const name = "name";
     const type = "Integer";
@@ -283,6 +259,44 @@ describe("createResourceDefinition", () => {
 
     expect(typeboxDefinition).toBe(result);
   });
+
+  it.each([
+    [
+      "0..255 bytes",
+      `_16: Type.Number({title: 'name', description: "Description ... 0..255 bytes"})`,
+    ],
+    [
+      "1: normal\r\n\t\t\t\t2: remote\r\n\t\t\t\t3: local",
+      `_16: Type.Number({title: 'name', description: "Description ... 1: normal      2: remote      3: local"})`,
+    ],
+    [
+      "<7 to >12.5",
+      `_16: Type.Number({title: 'name', description: "Description ... <7 to >12.5"})`,
+    ],
+  ])(
+    "Should check typebox definition when rangeEnumeration format is invalid",
+    (rangeEnumeration, expected) => {
+      const name = "name";
+      const type = "Integer";
+      const description = "Description";
+      const mandatoryStatus = "Mandatory";
+      const multipleInstances = "Single";
+      const id = "16";
+      const units = "";
+      const typeboxDefinition = createResourceDefinition(
+        name,
+        type,
+        description,
+        mandatoryStatus,
+        multipleInstances,
+        rangeEnumeration,
+        id,
+        units
+      );
+
+      expect(typeboxDefinition).toBe(expected);
+    }
+  );
 });
 
 describe("createLiteralDefinition", () => {
